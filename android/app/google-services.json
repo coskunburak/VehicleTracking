@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "868651514948",
+    "project_id": "bloc-5a120",
+    "storage_bucket": "bloc-5a120.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868651514948:android:5ba77094ea61678cd81011",
+        "android_client_info": {
+          "package_name": "com.example.bloc_yapisi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiP6lJm-1tRCsWhfcK8qAE9jzcAOUTk9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
