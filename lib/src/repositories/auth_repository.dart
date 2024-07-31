@@ -6,15 +6,20 @@ class AuthRepository {
   final CollectionReference collectionKisiler =
       FirebaseFirestore.instance.collection("Kisiler");
 
-  Future<void> signUp({required String email, required String password}) async {
+  Future<void> signUp(
+      {required String email,
+      required String password,
+      required String name,
+      required String surname}) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
-        password: password,
+        password: password
       );
 
-      await addUserToFirestore(userCredential.user?.uid, email);
+
+      await addUserToFirestore(userCredential.user?.uid, email,password,name,surname);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('This password is too weak');
@@ -41,13 +46,34 @@ class AuthRepository {
     }
   }
 
-  Future<void> addUserToFirestore(String? uid, String email) async {
+  Future<void> addUserToFirestore(
+      String? uid,
+      String email,
+      String password,
+      String name,
+      String surname
+      ) async {
     if (uid == null) return;
 
+    // Şu anki zamanı al
+    Timestamp now = Timestamp.now();
+
+    // Firestore'daki kullanıcı belgesini güncelle veya oluştur
     await collectionKisiler.doc(uid).set({
       'email': email,
-      'createdAt': Timestamp.now(),
-    });
+      'password': password,
+      'name': name,
+      'surname': surname,
+      'createdAt': now,
+      'loginTimes': FieldValue.arrayUnion([now]),
+    }, SetOptions(merge:true));
   }
 
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

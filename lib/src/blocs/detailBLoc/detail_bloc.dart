@@ -1,3 +1,4 @@
+/*
 import 'package:bloc_yapisi/src/models/vehicle.dart';
 import 'package:bloc_yapisi/src/utils/global.dart';
 import '../../models/vehicleDetail.dart';
@@ -31,3 +32,4 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   }
 }
 
+*/

@@ -7,12 +7,11 @@ import 'firebase_state.dart';
 class FirebaseBloc extends Bloc<FirebaseEvent, FirebaseState> {
   final UserRepository userRepository;
 
-
-  FirebaseBloc({required this.userRepository}) : super(FirebaseInitial()) {
-
+  FirebaseBloc(FirebaseInitial firebaseInitial, {required this.userRepository})
+      : super(FirebaseInitial()) {
     on<FetchUserInfoRequested>((event, emit) async {
-      emit(FirebaseLoading());
       try {
+        emit(FirebaseLoading());
         DocumentSnapshot userInfo = await userRepository.getUserInfo(event.uid);
         emit(UserInfoLoaded(userInfo: userInfo));
       } catch (e) {
@@ -20,32 +19,37 @@ class FirebaseBloc extends Bloc<FirebaseEvent, FirebaseState> {
       }
     });
 
-
-
-    on<UpdateUserRequested>((event, emit) async {
-      emit(FirebaseLoading());
+    on<UpdateUserInfoRequested>((event, emit) async {
       try {
-        await userRepository.updateUser(event.uid, event.email);
-        emit(UserUpdated());
-        print('Update request processed');
+        emit(FirebaseLoading());
+        await userRepository.updateUserInfo(event.uid, event.data);
+        await userRepository.updateEmail(event.data['email']);
+        DocumentSnapshot userInfo = await userRepository.getUserInfo(event.uid);
+        emit(UserInfoUpdated());
       } catch (e) {
         emit(FirebaseError(error: e.toString()));
-        print('Error during update request: ${e.toString()}');
       }
     });
-
 
     on<DeleteUserRequested>((event, emit) async {
-      emit(FirebaseLoading());
       try {
+        emit(FirebaseLoading());
         await userRepository.deleteUser(event.uid);
         emit(UserDeleted());
-        print('Delete request processed');
       } catch (e) {
         emit(FirebaseError(error: e.toString()));
-        print('Error during delete request: ${e.toString()}');
       }
     });
 
+    on<UpdatePasswordRequested>((event, emit) async {
+      try {
+        emit(FirebaseLoading());
+        await userRepository.updatePassword(
+            event.oldPassword, event.newPassword);
+        emit(UserPasswordUpdated());
+      } catch (e) {
+        emit(FirebaseError(error: e.toString()));
+      }
+    });
   }
 }

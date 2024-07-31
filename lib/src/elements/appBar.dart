@@ -1,5 +1,6 @@
 import 'package:bloc_yapisi/src/pages/user.dart';
 import 'package:bloc_yapisi/src/pages/weathersearch.dart';
+import 'package:bloc_yapisi/src/pages/login.dart'; // Login sayfasının importu
 import 'package:flutter/material.dart';
 import '../utils/global.dart';
 
@@ -26,10 +27,20 @@ PreferredSizeWidget appBar({
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => UserPage()
+                    builder: (context) => const UserPage()
                 ));
           },
           icon: const Icon(Icons.person, color: Colors.blue),
+        ),
+        IconButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const Login()
+                ));
+          },
+          icon: const Icon(Icons.exit_to_app, color: Colors.red),
         ),
       ],
       elevation: 0,

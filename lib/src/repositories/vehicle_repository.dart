@@ -1,20 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/vehicle.dart';
 import '../models/vehicleDetail.dart';
-import '../utils/global.dart';
 
 class VehicleRepository {
-  Future<List<Vehicle>> getVehicles({required int limit}) async {
-    return list.sublist(0, limit);
+  final CollectionReference collectionVehicles =
+  FirebaseFirestore.instance.collection("vehicles");
+
+  Future<void> addVehicleToFirestore(
+      {required double fuelTankLevel,
+        required double longitude,
+        required double latitude,
+        required double speed,
+        required int deviceId,
+        required double km,
+        required bool isActive,
+        required int sensors,
+        required String plate}) async {
+    await collectionVehicles.doc(plate).set({
+      'fuelTankLevel': fuelTankLevel,
+      'longitude': longitude,
+      'latitude': latitude,
+      'speed': speed,
+      'deviceId': deviceId,
+      'km': km,
+      'isActive': isActive,
+      'sensors': sensors,
+      'plate': plate,
+    });
   }
 
-  Future<List<Vehicle>> deleteVehicle({required int id}) async {
-    list.removeWhere((vehicle) => vehicle.id == id);
-    return list;
+  Stream<List<String>> getVehiclePlatesStream() {
+    return collectionVehicles.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => doc['plate'] as String).toList();
+    });
+  }
+  Future<void> deleteVehicle(String plate) async {
+    await collectionVehicles.doc(plate).delete();
   }
 
-  Future<VehicleDetail> getVehicleDetail({required int deviceId}) async {
-    return vehicleDetailList
-        .where((element) => element.deviceId == deviceId)
-        .first;
-  }
 }

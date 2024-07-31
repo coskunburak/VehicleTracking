@@ -1,44 +1,30 @@
 import 'package:equatable/equatable.dart';
-import '../../models/vehicle.dart';
 
 abstract class ListState extends Equatable {
   const ListState();
-}
-
-class ListLoadingState extends ListState {
-  @override
-  List<dynamic> get props => [];
-}
-
-class ListSuccessState extends ListState {
-  const ListSuccessState({required this.listData});
-
-  final List<Vehicle> listData;
 
   @override
-  List<dynamic> get props => [];
+  List<Object> get props => [];
 }
 
-class ListErrorState extends ListState {
+class ListInitial extends ListState {}
+
+class ListLoading extends ListState {}
+
+class ListLoaded extends ListState {
+  final List<String> plates;
+
+  const ListLoaded(this.plates);
+
   @override
-  List<dynamic> get props => [];
+  List<Object> get props => [plates];
 }
 
-class DelErrorState extends ListState {
-  @override
-  List<dynamic> get props => [];
-}
+class ListError extends ListState {
+  final String message;
 
-class DeleteLoading extends ListState {
-  @override
-  List<dynamic> get props => [];
-}
-
-class DeleteSuccess extends ListState {
-  const DeleteSuccess({required this.listData});
-
-  final List<Vehicle> listData;
+  const ListError(this.message);
 
   @override
-  List<dynamic> get props => [];
+  List<Object> get props => [message];
 }

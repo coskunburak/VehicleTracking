@@ -1,6 +1,26 @@
-class Vehicle {
-  final String plate;
-  final int id;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  Vehicle({required this.plate, required this.id});
+class Vehicle {
+  final double fuelTankLevel;
+  final double longitude;
+  final double latitude;
+  final double speed;
+  final int deviceId;
+  final double km;
+  final bool isActive;
+  final int sensors;
+  final String plate;
+
+  Vehicle({
+    required this.fuelTankLevel,
+    required this.longitude,
+    required this.latitude,
+    required this.speed,
+    required this.deviceId,
+    required this.km,
+    required this.isActive,
+    required this.sensors,
+    required this.plate,
+  });
+
 }

@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
 
-abstract class AuthState extends Equatable {
+abstract class AddVehicleState extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class Loading extends AuthState {
+class Loading extends AddVehicleState {
   @override
   List<Object> get props => [];
 }
 
-class Authenticated extends AuthState {
+class Authenticated extends AddVehicleState {
   @override
   List<Object> get props => [];
 }
 
-class UnAuthenticated extends AuthState {
+class UnAuthenticated extends AddVehicleState {
   final String error;
 
   UnAuthenticated({required this.error});
@@ -24,12 +24,12 @@ class UnAuthenticated extends AuthState {
   List<Object> get props => [error];
 }
 
-class SignUpSuccess extends AuthState {
+class AddVehicleSuccess extends AddVehicleState {
   @override
   List<Object> get props => [];
 }
 
-class ResetPasswordFailure extends AuthState {
+class ResetPasswordFailure extends AddVehicleState {
   final String error;
 
   ResetPasswordFailure({required this.error});
@@ -38,7 +38,7 @@ class ResetPasswordFailure extends AuthState {
   List<Object> get props => [error];
 }
 
-class ResetPasswordSuccess extends AuthState {
+class ResetPasswordSuccess extends AddVehicleState {
   @override
   List<Object> get props => [];
 }

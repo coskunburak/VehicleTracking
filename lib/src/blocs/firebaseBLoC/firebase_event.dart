@@ -14,14 +14,14 @@ class FetchUserInfoRequested extends FirebaseEvent {
   List<Object> get props => [uid];
 }
 
-class UpdateUserRequested extends FirebaseEvent {
+class UpdateUserInfoRequested extends FirebaseEvent {
   final String uid;
-  final String email;
+  final Map<String, dynamic> data;
 
-  UpdateUserRequested({required this.uid, required this.email});
+  UpdateUserInfoRequested({required this.uid, required this.data});
 
   @override
-  List<Object> get props => [uid, email];
+  List<Object> get props => [uid, data];
 }
 
 class DeleteUserRequested extends FirebaseEvent {
@@ -31,4 +31,15 @@ class DeleteUserRequested extends FirebaseEvent {
 
   @override
   List<Object> get props => [uid];
+}
+
+class UpdatePasswordRequested extends FirebaseEvent {
+  final String oldPassword;
+  final String newPassword;
+
+  UpdatePasswordRequested(
+      {required this.oldPassword, required this.newPassword});
+
+  @override
+  List<Object> get props => [oldPassword, newPassword];
 }

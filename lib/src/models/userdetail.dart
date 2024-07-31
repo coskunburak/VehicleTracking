@@ -1,6 +1,8 @@
 class Userdetail{
   final String email;
-  final String sifre;
+  final String password;
+  final String name;
+  final String surname;
 
-  Userdetail({required this.email,required this.sifre});
+  Userdetail({required this.email,required this.password,required this.name,required this.surname});
 }

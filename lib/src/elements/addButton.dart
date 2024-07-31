@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../utils/global.dart';
+import '../pages/addVehicle.dart';
 
-Widget addButton({required Function onPressed, required String title}) =>
-    Center(
-        child: ElevatedButton(
-      onPressed: () => onPressed(),
-      child: Text(title),
-    ));
+ addButton({ required BuildContext context}) =>
+    Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) =>const AddVehicle()));
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+          ),
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
