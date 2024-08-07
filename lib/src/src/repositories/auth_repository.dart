@@ -61,10 +61,8 @@ class AuthRepository {
       ) async {
     if (uid == null) return;
 
-    // Şu anki zamanı al
     Timestamp now = Timestamp.now();
 
-    // Firestore'daki kullanıcı belgesini güncelle veya oluştur
     await collectionKisiler.doc(uid).set({
       'email': email,
       'password': password,

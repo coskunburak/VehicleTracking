@@ -13,11 +13,12 @@ class ListLoading extends ListState {}
 
 class ListLoaded extends ListState {
   final List<String> plates;
+  final List<Map<String, dynamic>> vehicleDetails;
 
-  const ListLoaded(this.plates);
+  const ListLoaded(this.plates, this.vehicleDetails);
 
   @override
-  List<Object> get props => [plates];
+  List<Object> get props => [plates, vehicleDetails];
 }
 
 class ListError extends ListState {

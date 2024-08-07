@@ -9,7 +9,7 @@ import '../pages/addVehicle.dart';
         ElevatedButton(
           onPressed: (){
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) =>const AddVehicle()));
+                MaterialPageRoute(builder: (context) => AddVehicle()));
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),

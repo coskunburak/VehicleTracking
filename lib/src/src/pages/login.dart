@@ -42,43 +42,49 @@ class Login extends StatelessWidget {
                 ],
               ),
             ),
-            body: BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is Authenticated) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ListScreen(),
-                    ),
-                  );
-                }
-                if (state is UnAuthenticated) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.error),
-                    ),
-                  );
-                }
-                if (state is SignUpSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kayıt Başarılı')),
-                  );
-                }
-                if (state is ResetPasswordSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Şifre sıfırlama e-postası gönderildi')),
-                  );
-                }
+            body: GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
               },
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TabBarView(
-                  children: [
-                    buildLoginTab(context),
-                    buildSignUpTab(context),
-                    buildResetPasswordTab(context),
-                  ],
+              child: BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is Authenticated) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListScreen(),
+                      ),
+                    );
+                  }
+                  if (state is UnAuthenticated) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
+                      ),
+                    );
+                  }
+                  if (state is SignUpSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Kayıt Başarılı')),
+                    );
+                  }
+                  if (state is ResetPasswordSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                          Text('Şifre sıfırlama e-postası gönderildi')),
+                    );
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TabBarView(
+                    children: [
+                      buildLoginTab(context),
+                      buildSignUpTab(context),
+                      buildResetPasswordTab(context),
+                    ],
+                  ),
                 ),
               ),
             ),

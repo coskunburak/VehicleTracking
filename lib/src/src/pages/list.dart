@@ -8,7 +8,7 @@ import 'package:bloc_yapisi/src/elements/addButton.dart';
 import 'package:bloc_yapisi/src/elements/appBar.dart';
 import 'package:bloc_yapisi/src/pages/vehicleDetail.dart';
 
-import '../widgets/list_body.dart'; // Araç detay sayfasını import et
+import '../widgets/list_body.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});

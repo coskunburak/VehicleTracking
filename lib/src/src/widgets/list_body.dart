@@ -11,7 +11,8 @@ Widget listScrollList({required Function(int) onDelete}) {
       if (state is ListLoading) {
         return Center(child: CircularProgressIndicator());
       } else if (state is ListLoaded) {
-        final vehicles = state.plates; // State'ten araç plakalarını al
+        final vehicles = state.plates;
+        final vehicleDetails = state.vehicleDetails;
 
         return ListView.builder(
           physics: const BouncingScrollPhysics(),
@@ -21,6 +22,10 @@ Widget listScrollList({required Function(int) onDelete}) {
           itemCount: vehicles.length,
           itemBuilder: (context, index) {
             final plate = vehicles[index];
+            final details = vehicleDetails[index];
+            final sensors = details['sensors'] ?? 0;
+            final speed = details['speed'] ?? 0.0;
+
             return InkWell(
               onTap: () async {
                 await Navigator.push(
@@ -52,9 +57,7 @@ Widget listScrollList({required Function(int) onDelete}) {
                     },
                   );
                   if (delete) {
-                    // Silme işlemini BLoC üzerinden yap
                     context.read<ListBloc>().add(DeleteVehicle(plate));
-                    // Silme işlemi sonrası listeyi güncelle
                     onDelete(index);
                   }
                   return delete;
@@ -78,9 +81,36 @@ Widget listScrollList({required Function(int) onDelete}) {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 12),
-                        Text(plate),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(plate),
+                            Row(
+                              children: [
+                                if (sensors > 50)
+                                  const Tooltip(
+                                    message: 'Yüksek Sıcaklık!',
+                                    child: Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                const SizedBox(width: 12),
+                                if (speed > 120)
+                                  const Tooltip(
+                                    message: "Hız 120'den Fazla!",
+                                    child: Icon(
+                                      Icons.speed,
+                                      color: Colors.amber,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
+
+                        ),
                         const SizedBox(height: 4),
-                        // Eğer ek bilgi gerekiyorsa, buraya ekleyebilirsin
+
                         const SizedBox(height: 12),
                       ],
                     ),
