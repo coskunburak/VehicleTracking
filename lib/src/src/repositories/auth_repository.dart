@@ -39,8 +39,18 @@ class AuthRepository {
         email: email,
         password: password,
       );
+
+      // Son giriş zamanını güncelle
+      String? uid = userCredential.user?.uid;
+      if (uid != null) {
+        await collectionKisiler.doc(uid).update({
+          'loginTimes': Timestamp.now(),
+        });
+      }
+
       String? token = await userRepository.getMessageToken();
-      await userRepository.saveMessageToken(userCredential.user?.uid ?? "", token);
+      await userRepository.saveMessageToken(uid ?? "", token);
+
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
@@ -51,6 +61,7 @@ class AuthRepository {
       throw Exception(e.toString());
     }
   }
+
 
   Future<void> addUserToFirestore(
       String? uid,
@@ -65,7 +76,6 @@ class AuthRepository {
 
     await collectionKisiler.doc(uid).set({
       'email': email,
-      'password': password,
       'name': name,
       'surname': surname,
       'createdAt': now,

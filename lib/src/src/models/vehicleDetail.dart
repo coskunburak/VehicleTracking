@@ -8,7 +8,7 @@ class VehicleDetail {
   final bool isActive;
   final int sensors;
   final String plate;
-
+  final String userId;
   VehicleDetail({
     required this.fuelTankLevel,
     required this.longitude,
@@ -19,6 +19,7 @@ class VehicleDetail {
     required this.isActive,
     required this.sensors,
     required this.plate,
+    required this.userId,
   });
 
   factory VehicleDetail.fromFirestore(Map<String, dynamic> data) {
@@ -32,6 +33,7 @@ class VehicleDetail {
       isActive: data['isActive'] ?? false,
       sensors: data['sensors']?.toInt() ?? 0,
       plate: data['plate'] ?? '',
+      userId: data['userId'] ?? '',
     );
   }
 }

@@ -9,8 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kdgaugeview/kdgaugeview.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../widgets/info_card.dart';
-import '../repositories/vehicle_repository.dart'; // Import your VehicleRepository
+import '../repositories/pdf_repository.dart';
 
 class VehicleDetailScreen extends StatefulWidget {
   final String plate;
@@ -58,6 +57,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
               final vehicle = snapshot.data!.data() as Map<String, dynamic>;
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,43 +69,51 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.car_rental_sharp, color: Colors.blue),
+                                    Icon(Icons.car_rental_sharp,
+                                        color: Colors.blue),
                                     SizedBox(width: 8),
                                     Text(
                                       'Plate: ${vehicle['plate']}',
-                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
-
                                 IconButton(
                                   onPressed: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => AddVehicle(vehicleData: vehicle),
+                                        builder: (context) =>
+                                            AddVehicle(vehicleData: vehicle),
                                       ),
                                     );
                                   },
-                                  icon: Icon(Icons.edit_note, color: Colors.redAccent, size: 30),
+                                  icon: Icon(Icons.edit_note,
+                                      color: Colors.redAccent, size: 30),
                                 ),
                               ],
                             ),
+                            SizedBox(height: 1),
                             Row(
                               children: [
                                 Icon(Icons.key, color: Colors.deepPurple),
                                 SizedBox(width: 8),
                                 Text(
                                   'Device ID: ${vehicle['deviceId']}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: 12),
                             Row(
                               children: [
                                 Icon(
@@ -119,18 +127,48 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                 SizedBox(width: 8),
                                 Text(
                                   'Active: ${vehicle['isActive'] ? 'Yes' : 'No'}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            SizedBox(height: 1),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(Icons.sensors, color: Colors.orange),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Sensors: ${vehicle['sensors']}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Icon(Icons.sensors, color: Colors.orange),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Sensors: ${vehicle['sensors']}',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    if (snapshot.hasData &&
+                                        snapshot.data!.exists) {
+                                      final vehicle = snapshot.data!.data()
+                                          as Map<String, dynamic>;
+
+                                      String imagePath = 'seyir.png';
+
+                                      await generateVehiclePdf(
+                                          vehicle, imagePath);
+                                    } else {
+                                      print('Arac Verisi Bulunamadı.');
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.blueAccent,
+                                    size: 30,
+                                  ),
                                 ),
                               ],
                             ),
@@ -164,7 +202,8 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                         ),
                                         markers: {
                                           Marker(
-                                            markerId: const MarkerId('vehicle_location'),
+                                            markerId: const MarkerId(
+                                                'vehicle_location'),
                                             position: LatLng(
                                               vehicle['latitude'],
                                               vehicle['longitude'],
@@ -189,16 +228,16 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                     context
                                         .read<MapBloc>()
                                         .add(ToggleMapVisibility(
-                                      latitude: mapState.latitude,
-                                      longitude: mapState.longitude,
-                                    ));
+                                          latitude: mapState.latitude,
+                                          longitude: mapState.longitude,
+                                        ));
                                   } else if (mapState is MapHiddenState) {
                                     context
                                         .read<MapBloc>()
                                         .add(ToggleMapVisibility(
-                                      latitude: vehicle['latitude'],
-                                      longitude: vehicle['longitude'],
-                                    ));
+                                          latitude: vehicle['latitude'],
+                                          longitude: vehicle['longitude'],
+                                        ));
                                     _moveToVehicleLocation(
                                       vehicle['latitude'],
                                       vehicle['longitude'],
@@ -220,12 +259,16 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                           .doc(widget.plate)
                           .snapshots(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return Center(child: Text('Error: ${snapshot.error}'));
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
                         } else if (snapshot.hasData && snapshot.data!.exists) {
-                          final vehicle = snapshot.data!.data() as Map<String, dynamic>;
+                          final vehicle =
+                              snapshot.data!.data() as Map<String, dynamic>;
                           return Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: SizedBox(
@@ -247,7 +290,8 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                   padding: const EdgeInsets.only(top: 110.0),
                                   child: Center(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Icons.speed),
                                         Text(
@@ -262,7 +306,8 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                             ),
                           );
                         } else {
-                          return const Center(child: Text('Error loading data.'));
+                          return const Center(
+                              child: Text('Error loading data.'));
                         }
                       },
                     ),

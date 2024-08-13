@@ -10,6 +10,8 @@ import 'package:bloc_yapisi/src/elements/pageLoading.dart';
 import 'package:bloc_yapisi/src/blocs/addVehicleBLoC/addvehicle_event.dart';
 import 'package:bloc_yapisi/src/blocs/addVehicleBLoC/addvehicle_state.dart';
 
+import '../widgets/build_text.dart';
+
 class AddVehicle extends StatelessWidget {
   final Map<String, dynamic>? vehicleData;
   final _formKey = GlobalKey<FormState>();
@@ -113,7 +115,7 @@ class AddVehicle extends StatelessWidget {
                             );
                           },
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _plateController,
                           labelText: 'Plaka',
                           keyboardType: TextInputType.text,
@@ -123,7 +125,7 @@ class AddVehicle extends StatelessWidget {
                           icon: Icons.car_crash,
                           iconColor: Colors.grey,
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _fuelTankLevelController,
                           labelText: 'Yakıt Seviyesi',
                           keyboardType:
@@ -137,7 +139,7 @@ class AddVehicle extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: _buildTextFormField(
+                              child: buildTextFormField(
                                 controller: _latitudeController,
                                 labelText: 'Enlem',
                                 keyboardType: TextInputType.numberWithOptions(
@@ -152,7 +154,7 @@ class AddVehicle extends StatelessWidget {
                             ),
                             SizedBox(width: 8.0),
                             Expanded(
-                              child: _buildTextFormField(
+                              child: buildTextFormField(
                                 controller: _longitudeController,
                                 labelText: 'Boylam',
                                 keyboardType: TextInputType.numberWithOptions(
@@ -204,7 +206,7 @@ class AddVehicle extends StatelessWidget {
                             );
                           },
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _speedController,
                           labelText: 'Hız',
                           keyboardType:
@@ -215,7 +217,7 @@ class AddVehicle extends StatelessWidget {
                           icon: Icons.speed,
                           iconColor: Colors.orange,
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _deviceIdController,
                           labelText: 'Cihaz ID',
                           keyboardType: TextInputType.number,
@@ -225,7 +227,7 @@ class AddVehicle extends StatelessWidget {
                           icon: Icons.devices,
                           iconColor: Colors.purple,
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _kmController,
                           labelText: 'KM',
                           keyboardType:
@@ -236,7 +238,7 @@ class AddVehicle extends StatelessWidget {
                           icon: Icons.track_changes,
                           iconColor: Colors.red,
                         ),
-                        _buildTextFormField(
+                        buildTextFormField(
                           controller: _sensorsController,
                           labelText: 'Sensors',
                           keyboardType: TextInputType.number,
@@ -295,25 +297,5 @@ class AddVehicle extends StatelessWidget {
     );
   }
 
-  Widget _buildTextFormField({
-    required TextEditingController controller,
-    required String labelText,
-    required TextInputType keyboardType,
-    required String? Function(String?) validator,
-    required IconData icon,
-    required Color iconColor,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labelText,
-          prefixIcon: Icon(icon, color: iconColor),
-        ),
-        keyboardType: keyboardType,
-        validator: validator,
-      ),
-    );
-  }
+
 }

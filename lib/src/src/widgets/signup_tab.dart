@@ -88,7 +88,6 @@ Widget buildSignUpTab(BuildContext context) {
                 final name = _signUpNameController.text;
                 final surname = _signUpSurnameController.text;
                 context.read<AuthBloc>().add(SignUpRequested(email: email, password: password, name: name, surname: surname,));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ListScreen()));
               },
               child: const Text('Kayıt Ol'),
 

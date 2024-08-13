@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/vehicleDetail.dart';
 
@@ -17,6 +18,8 @@ class VehicleRepository {
     required int sensors,
     required String plate,
   }) async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+
     await collectionVehicles.doc(plate).set({
       'fuelTankLevel': fuelTankLevel,
       'longitude': longitude,
@@ -27,6 +30,7 @@ class VehicleRepository {
       'isActive': isActive,
       'sensors': sensors,
       'plate': plate,
+      'userId': userId,
     });
   }
 
@@ -41,7 +45,11 @@ class VehicleRepository {
   }
 
   Stream<List<String>> getVehiclePlatesStream() {
-    return collectionVehicles.snapshots().map((snapshot) {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    return collectionVehicles
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs.map((doc) => doc['plate'] as String).toList();
     });
   }
@@ -51,7 +59,7 @@ class VehicleRepository {
       if (snapshot.exists) {
         return snapshot.data() as Map<String, dynamic>;
       } else {
-        return {}; // Return an empty map if the document doesn't exist
+        return {};
       }
     });
   }
