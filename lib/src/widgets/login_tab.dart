@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/loginBLoC/auth_bloc.dart';
-import '../blocs/loginBLoC/auth_event.dart';
-import '../blocs/loginBLoC/auth_state.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_event.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_state.dart';
 import '../elements/pageLoading.dart';
 
 Widget buildLoginTab(BuildContext context) {
@@ -25,7 +25,7 @@ Widget buildLoginTab(BuildContext context) {
               borderRadius: BorderRadius.circular(12.0),
             ),
             filled: true,
-            fillColor: Colors.blue.shade50,
+            fillColor: Colors.white,
           ),
         ),
         const SizedBox(height: 10),
@@ -37,7 +37,7 @@ Widget buildLoginTab(BuildContext context) {
               borderRadius: BorderRadius.circular(12.0),
             ),
             filled: true,
-            fillColor: Colors.blue.shade50,
+            fillColor: Colors.white,
           ),
           obscureText: true,
         ),
@@ -57,7 +57,10 @@ Widget buildLoginTab(BuildContext context) {
                 final password = _loginPasswordController.text;
                 context.read<AuthBloc>().add(LoginRequested(email: email, password: password));
               },
-              child: const Text('Giriş Yap'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF4a4b65)
+                ),
+              child: const Text('Giriş Yap',style: TextStyle(color: Colors.white),),
             );
           },
         ),

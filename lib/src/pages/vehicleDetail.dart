@@ -1,6 +1,8 @@
 import 'package:bloc_yapisi/src/blocs/mapBLoC/map_bloc.dart';
 import 'package:bloc_yapisi/src/elements/appBar.dart';
 import 'package:bloc_yapisi/src/elements/locationButton.dart';
+import 'package:bloc_yapisi/src/pages/addVehicle.dart';
+import 'package:bloc_yapisi/src/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kdgaugeview/kdgaugeview.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../widgets/info_card.dart';
+import '../repositories/pdf_repository.dart';
 
 class VehicleDetailScreen extends StatefulWidget {
   final String plate;
@@ -38,25 +40,32 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //FirebaseFirestore.instance.collection('permissions').doc('5').delete();
     return BlocProvider(
       create: (context) => MapBloc(),
       child: Scaffold(
-        appBar: appBar(context: context, title: 'Araç Detayları'),
-        body: FutureBuilder(
-          future: _getVehicleDetails(widget.plate),
+        appBar: appBar(context: context, title: 'Araç Detayları',isBack: true),
+        backgroundColor: bodyBackground,
+        body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('vehicles')
+              .doc(widget.plate)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
-              final vehicle = snapshot.data as Map<String, dynamic>;
+            } else if (snapshot.hasData && snapshot.data!.exists) {
+              final vehicle = snapshot.data!.data() as Map<String, dynamic>;
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
+                      color: Colors.white70,
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Padding(
@@ -65,27 +74,50 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(Icons.car_rental_sharp, color: Colors.blue),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Plate: ${vehicle['plate']}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.car_rental_sharp,
+                                        color: Colors.blue),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Plate: ${vehicle['plate']}',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddVehicle(vehicleData: vehicle),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.edit_note,
+                                      color: Colors.redAccent, size: 30),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 1),
                             Row(
                               children: [
-                                Icon(Icons.key, color: Colors.deepPurple),
-                                SizedBox(width: 8),
+                                const Icon(Icons.key, color: Colors.deepPurple),
+                                const SizedBox(width: 8),
                                 Text(
                                   'Device ID: ${vehicle['deviceId']}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 12),
                             Row(
                               children: [
                                 Icon(
@@ -96,21 +128,50 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                       ? Colors.green
                                       : Colors.red,
                                 ),
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Text(
                                   'Active: ${vehicle['isActive'] ? 'Yes' : 'No'}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 1),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(Icons.sensors, color: Colors.orange),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Sensors: ${vehicle['sensors']}',
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.sensors, color: Colors.orange),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Sensors: ${vehicle['sensors']}',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    if (snapshot.hasData &&
+                                        snapshot.data!.exists) {
+                                      final vehicle = snapshot.data!.data()
+                                          as Map<String, dynamic>;
+
+                                      String imagePath = 'seyir.png';
+
+                                      await generateVehiclePdf(
+                                          vehicle, imagePath);
+                                    } else {
+                                        }
+                                  },
+                                  icon: const Icon(
+                                    Icons.picture_as_pdf,
+                                    color: Colors.blueAccent,
+                                    size: 30,
+                                  ),
                                 ),
                               ],
                             ),
@@ -119,6 +180,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       ),
                     ),
                     Card(
+                      color: Colors.white70,
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(
@@ -144,7 +206,8 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                         ),
                                         markers: {
                                           Marker(
-                                            markerId: const MarkerId('vehicle_location'),
+                                            markerId: const MarkerId(
+                                                'vehicle_location'),
                                             position: LatLng(
                                               vehicle['latitude'],
                                               vehicle['longitude'],
@@ -169,16 +232,16 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                                     context
                                         .read<MapBloc>()
                                         .add(ToggleMapVisibility(
-                                      latitude: mapState.latitude,
-                                      longitude: mapState.longitude,
-                                    ));
+                                          latitude: mapState.latitude,
+                                          longitude: mapState.longitude,
+                                        ));
                                   } else if (mapState is MapHiddenState) {
                                     context
                                         .read<MapBloc>()
                                         .add(ToggleMapVisibility(
-                                      latitude: vehicle['latitude'],
-                                      longitude: vehicle['longitude'],
-                                    ));
+                                          latitude: vehicle['latitude'],
+                                          longitude: vehicle['longitude'],
+                                        ));
                                     _moveToVehicleLocation(
                                       vehicle['latitude'],
                                       vehicle['longitude'],
@@ -194,41 +257,61 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: KdGaugeView(
-                          minSpeed: 0,
-                          maxSpeed: 250,
-                          // Updated with new variable
-                          speed: vehicle['speed'].toDouble(),
-                          animate: true,
-                          duration: const Duration(seconds: 1),
-                          alertSpeedArray: const [40, 80, 90],
-                          alertColorArray: const [
-                            Colors.orange,
-                            Colors.indigo,
-                            Colors.red
-                          ],
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 150.0),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.speed),
-                                  Text(
-                                    '${vehicle['km'].toDouble()}',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
+                    StreamBuilder<DocumentSnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('vehicles')
+                          .doc(widget.plate)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData && snapshot.data!.exists) {
+                          final vehicle =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          return Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: SizedBox(
+                              width: 400,
+                              height: 400,
+                              child: KdGaugeView(
+                                minSpeed: 0,
+                                maxSpeed: 250,
+                                speed: vehicle['speed'].toDouble(),
+                                animate: true,
+                                duration: const Duration(seconds: 1),
+                                alertSpeedArray: const [42],
+                                alertColorArray: const [
+                                  Colors.red
                                 ],
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 110.0),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.speed),
+                                        Text(
+                                          '${vehicle['km'].toString()}',
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
+                          );
+                        } else {
+                          return const Center(
+                              child: Text('Error loading data.'));
+                        }
+                      },
                     ),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -267,13 +350,5 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
         ),
       ),
     );
-  }
-
-  Future<Map<String, dynamic>> _getVehicleDetails(String plate) async {
-    final doc = await FirebaseFirestore.instance
-        .collection('vehicles')
-        .doc(plate)
-        .get();
-    return doc.data() ?? {};
   }
 }

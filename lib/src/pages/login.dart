@@ -1,7 +1,5 @@
 import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_bloc.dart';
-import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_event.dart';
 import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_state.dart';
-import 'package:bloc_yapisi/src/elements/pageLoading.dart';
 import 'package:bloc_yapisi/src/pages/list.dart';
 import 'package:bloc_yapisi/src/repositories/auth_repository.dart';
 import 'package:bloc_yapisi/src/utils/global.dart';
@@ -32,9 +30,12 @@ class Login extends StatelessWidget {
               elevation: 0,
               title: const Text(
                 "Giriş",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Color(0xFF0c3143)),
               ),
               bottom: const TabBar(
+                labelColor: Colors.white,
+                unselectedLabelColor: Color(0xFF0c3143),
                 tabs: [
                   Tab(text: 'Giriş Yap'),
                   Tab(text: 'Kayıt Ol'),
@@ -42,43 +43,68 @@ class Login extends StatelessWidget {
                 ],
               ),
             ),
-            body: BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is Authenticated) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ListScreen(),
-                    ),
-                  );
-                }
-                if (state is UnAuthenticated) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.error),
-                    ),
-                  );
-                }
-                if (state is SignUpSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kayıt Başarılı')),
-                  );
-                }
-                if (state is ResetPasswordSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Şifre sıfırlama e-postası gönderildi')),
-                  );
-                }
+            backgroundColor: bodyBackground,
+            body: GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
               },
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TabBarView(
-                  children: [
-                    buildLoginTab(context),
-                    buildSignUpTab(context),
-                    buildResetPasswordTab(context),
-                  ],
+              child: BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is Authenticated) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListScreen(),
+                      ),
+                    );
+                  }
+                  if (state is UnAuthenticated) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.error),
+                      ),
+                    );
+                  }
+                  if (state is SignUpSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Kayıt Başarılı')),
+                    );
+                  }
+                  if (state is ResetPasswordSuccess) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text(
+                              'Şifre sıfırlama e-postası gönderildi')),
+                    );
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/seyir.png',
+                        height: 150,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SingleChildScrollView(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: TabBarView(
+                                children: [
+                                  buildLoginTab(context),
+                                  buildSignUpTab(context),
+                                  buildResetPasswordTab(context),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

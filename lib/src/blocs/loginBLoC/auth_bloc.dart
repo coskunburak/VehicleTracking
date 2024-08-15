@@ -13,7 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(Loading());
       try {
         await authRepository.signUp(email: event.email, password: event.password,name: event.name,surname:event.surname);
-        emit(SignUpSuccess());
+        emit(Authenticated());
       } catch (e) {
         emit(UnAuthenticated(error: e.toString()));
       }
@@ -40,6 +40,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(ResetPasswordSuccess());
       } catch (e) {
         emit(ResetPasswordFailure(error: e.toString()));
+      }
+    });
+
+    on<FetchUserPermissions>((event, emit) async {
+      try {
+        final permissions = await authRepository.getUserPermissions(event.uid);
+        if (permissions != null) {
+          emit(UserPermissionsLoaded(permissions));
+        } else {
+          emit(UnAuthenticated(error: 'Permissions not found'));
+        }
+      } catch (e) {
+        emit(UnAuthenticated(error: e.toString()));
       }
     });
 

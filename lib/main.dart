@@ -1,4 +1,4 @@
-import 'package:bloc_yapisi/src/pages/login.dart';
+import 'package:bloc_yapisi/src/pages/splash.dart';
 import 'package:bloc_yapisi/src/utils/notification_service.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true),
-      home: const Login(),
+      home: const SplashScreen(),
     );
   }
 }

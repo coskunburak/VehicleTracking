@@ -11,7 +11,7 @@ class AddVehicleRequsted extends AddVehicleEvent {
   final double latitude;
   final double speed;
   final int deviceId;
-  final double km;
+  final int km;
   final bool isActive;
   final int sensors;
   final String plate;
@@ -48,6 +48,17 @@ class ToggleIsActive extends AddVehicleEvent {
   @override
   List<Object> get props => [isActive];
 }
+
+class LoadVehicleDetails extends AddVehicleEvent {
+  final String plate;
+
+  LoadVehicleDetails({required this.plate});
+
+  @override
+  List<Object> get props => [plate];
+}
+class FetchVehiclesDetail extends AddVehicleEvent {}
+
 /*class SaveVehicleRequested extends AddVehicleEvent {
   final String email;
   final String password;

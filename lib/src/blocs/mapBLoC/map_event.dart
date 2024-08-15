@@ -16,3 +16,8 @@ class ToggleMapVisibility extends MapEvent {
   @override
   List<Object> get props => [latitude, longitude];
 }
+
+class FetchLocation extends MapEvent {
+  @override
+  List<Object> get props => [];
+}

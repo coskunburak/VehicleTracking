@@ -7,11 +7,11 @@ class Vehicle {
   final double latitude;
   final double speed;
   final int deviceId;
-  final double km;
+  final int km;
   final bool isActive;
   final int sensors;
   final String plate;
-
+  final String userId;
   Vehicle({
     required this.fuelTankLevel,
     required this.longitude,
@@ -22,6 +22,7 @@ class Vehicle {
     required this.isActive,
     required this.sensors,
     required this.plate,
+    required this.userId,
   });
 
 

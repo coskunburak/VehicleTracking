@@ -1,16 +1,15 @@
 class VehicleDetail {
-  final String plate;
   final double fuelTankLevel;
   final double longitude;
   final double latitude;
   final double speed;
   final int deviceId;
-  final double km;
+  final int km;
   final bool isActive;
   final int sensors;
-
+  final String plate;
+  final String userId;
   VehicleDetail({
-    required this.plate,
     required this.fuelTankLevel,
     required this.longitude,
     required this.latitude,
@@ -19,19 +18,22 @@ class VehicleDetail {
     required this.km,
     required this.isActive,
     required this.sensors,
+    required this.plate,
+    required this.userId,
   });
 
   factory VehicleDetail.fromFirestore(Map<String, dynamic> data) {
     return VehicleDetail(
-      plate: data['plate'],
-      fuelTankLevel: data['fuelTankLevel'],
-      longitude: data['longitude'],
-      latitude: data['latitude'],
-      speed: data['speed'],
-      deviceId: data['deviceId'],
-      km: data['km'],
-      isActive: data['isActive'],
-      sensors: data['sensors'],
+      fuelTankLevel: data['fuelTankLevel']?.toDouble() ?? 0.0,
+      longitude: data['longitude']?.toDouble() ?? 0.0,
+      latitude: data['latitude']?.toDouble() ?? 0.0,
+      speed: data['speed']?.toDouble() ?? 0.0,
+      deviceId: data['deviceId']?.toInt() ?? 0,
+      km: data['km']?.toInt() ?? 0,
+      isActive: data['isActive'] ?? false,
+      sensors: data['sensors']?.toInt() ?? 0,
+      plate: data['plate'] ?? '',
+      userId: data['userId'] ?? '',
     );
   }
 }

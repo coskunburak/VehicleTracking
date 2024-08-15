@@ -36,3 +36,10 @@ class ResetPasswordRequested extends AuthEvent {
 }
 
 
+class FetchUserPermissions extends AuthEvent {
+  final String uid;
+
+  FetchUserPermissions(this.uid);
+}
+
+

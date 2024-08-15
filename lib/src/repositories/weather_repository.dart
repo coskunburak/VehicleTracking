@@ -8,7 +8,7 @@ class WeatherRepository {
     dio.options.headers['Content-Type'] = "application/json; charset=UTF-8";
     var response = await dio
         .get('http://api.weatherapi.com/v1/current.json?key=$apiKey&q=$city');
-    print(response);
+
     if (response.statusCode == 200) {
       Weather weather = Weather.fromJson(response.data);
       return weather;
@@ -24,7 +24,7 @@ class WeatherRepository {
     var response = await dio
         .get('http://api.weatherapi.com/v1/search.json?key=$apiKey&q=$query');
 
-    print('City Suggestions Response: ${response.data}');
+
     if (response.statusCode == 200) {
       var data = response.data as List;
       List<String> cities = data.map((item) => item['name'] as String).toList();

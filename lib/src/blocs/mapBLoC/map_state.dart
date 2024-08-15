@@ -21,3 +21,17 @@ class MapVisibleState extends MapState {
   @override
   List<Object> get props => [latitude, longitude];
 }
+
+class LocationLoadingState extends MapState {
+  @override
+  List<Object> get props => [];
+}
+
+class LocationErrorState extends MapState {
+  final String message;
+
+  const LocationErrorState({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

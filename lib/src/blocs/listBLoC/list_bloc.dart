@@ -15,10 +15,13 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     emit(ListLoading());
     try {
       await for (final plates in vehicleRepository.getVehiclePlatesStream()) {
-        emit(ListLoaded(plates));
+        final vehicleDetails = await Future.wait(
+          plates.map((plate) => vehicleRepository.getVehicleDetailStream(plate).first),
+        );
+        emit(ListLoaded(plates, vehicleDetails));
       }
     } catch (e) {
-      emit(ListError("Failed to fetch vehicle plates"));
+      emit(ListError("Failed to fetch vehicle plates: ${e.toString()}"));
     }
   }
 
@@ -28,9 +31,11 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       ) async {
     try {
       await vehicleRepository.deleteVehicle(event.plate);
-      // Listeyi güncelle
       final plates = await vehicleRepository.getVehiclePlatesStream().first;
-      emit(ListLoaded(plates));
+      final vehicleDetails = await Future.wait(
+        plates.map((plate) => vehicleRepository.getVehicleDetailStream(plate).first),
+      );
+      emit(ListLoaded(plates, vehicleDetails));
     } catch (e) {
       emit(ListError(e.toString()));
     }

@@ -4,5 +4,8 @@ Widget locationButton({required Function onPressed, required String title}) =>
     Center(
         child: ElevatedButton(
       onPressed: () => onPressed(),
-      child: Text(title),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF0c3143)
+      ),
+      child: Text(title,style: TextStyle(color: Colors.white),),
     ));
