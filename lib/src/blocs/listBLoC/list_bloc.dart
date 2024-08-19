@@ -9,6 +9,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   ListBloc(this.vehicleRepository) : super(ListInitial()) {
     on<FetchVehicles>(_onFetchVehicles);
     on<DeleteVehicle>(_onDeleteVehicle);
+    on<UpdateVehicleList>(_onUpdateVehicleList); // Handle the new event
   }
 
   void _onFetchVehicles(FetchVehicles event, Emitter<ListState> emit) async {
@@ -25,10 +26,11 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     }
   }
 
-  Future<void> _onDeleteVehicle(
-      DeleteVehicle event,
-      Emitter<ListState> emit,
-      ) async {
+  void _onUpdateVehicleList(UpdateVehicleList event, Emitter<ListState> emit) {
+    emit(ListLoaded(event.plates, event.vehicleDetails));
+  }
+
+  Future<void> _onDeleteVehicle(DeleteVehicle event, Emitter<ListState> emit) async {
     try {
       await vehicleRepository.deleteVehicle(event.plate);
       final plates = await vehicleRepository.getVehiclePlatesStream().first;

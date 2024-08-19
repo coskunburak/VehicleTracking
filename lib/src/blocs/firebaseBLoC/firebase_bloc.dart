@@ -1,4 +1,4 @@
-import 'package:bloc_yapisi/src/repositories/user_repository.dart';
+import 'package:aractakip2/src/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_event.dart';

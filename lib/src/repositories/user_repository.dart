@@ -25,13 +25,27 @@ class UserRepository {
 
   Future<void> deleteUser(String uid) async {
     try {
-      await collectionKisiler.doc(uid).delete();
+      // Retrieve the user's document to get the permissionId
+      DocumentSnapshot userDoc = await collectionKisiler.doc(uid).get();
+      var userData = userDoc.data() as Map<String, dynamic>?;
 
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null && user.uid == uid) {
-        await user.delete();
+      if (userData != null && userDoc.exists) {
+        var permissionId = userData['permissionId'];
+
+        String permissionIdStr = permissionId.toString();
+
+        await collectionKisiler.doc(uid).delete();
+
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null && user.uid == uid) {
+          await FirebaseFirestore.instance.collection('permissions').doc(permissionIdStr).delete();
+
+          await user.delete();
+        } else {
+          throw Exception('Kullanıcı oturum açmamış.');
+        }
       } else {
-        throw Exception('Kullanıcı oturum açmamış.');
+        throw Exception('Kullanıcı bulunamadı.');
       }
     } catch (e) {
       throw Exception('Error deleting user: $e');

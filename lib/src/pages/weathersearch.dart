@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:bloc_yapisi/src/utils/global.dart';
+import 'package:aractakip2/src/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_yapisi/src/blocs/weatherBLoC/weather_bloc.dart';
-import 'package:bloc_yapisi/src/blocs/weatherBLoC/weather_event.dart';
-import 'package:bloc_yapisi/src/blocs/weatherBLoC/weather_state.dart';
+import 'package:aractakip2/src/blocs/weatherBLoC/weather_bloc.dart';
+import 'package:aractakip2/src/blocs/weatherBLoC/weather_event.dart';
+import 'package:aractakip2/src/blocs/weatherBLoC/weather_state.dart';
 
 class Weathersearch extends StatelessWidget {
   const Weathersearch({super.key});

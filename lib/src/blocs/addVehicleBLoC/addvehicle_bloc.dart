@@ -1,6 +1,6 @@
-import 'package:bloc_yapisi/src/blocs/addVehicleBLoC/addvehicle_event.dart';
-import 'package:bloc_yapisi/src/blocs/addVehicleBLoC/addvehicle_state.dart';
-import 'package:bloc_yapisi/src/repositories/vehicle_repository.dart';
+import 'package:aractakip2/src/blocs/addVehicleBLoC/addvehicle_event.dart';
+import 'package:aractakip2/src/blocs/addVehicleBLoC/addvehicle_state.dart';
+import 'package:aractakip2/src/repositories/vehicle_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

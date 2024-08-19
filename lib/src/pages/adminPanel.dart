@@ -1,5 +1,5 @@
-import 'package:bloc_yapisi/src/pages/canEditUser.dart';
-import 'package:bloc_yapisi/src/pages/canEditVehicle.dart';
+import 'package:aractakip2/src/pages/canEditUser.dart';
+import 'package:aractakip2/src/pages/canEditVehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../elements/appBar.dart';

@@ -1,7 +1,7 @@
-import 'package:bloc_yapisi/src/blocs/weatherBLoC/weather_event.dart';
-import 'package:bloc_yapisi/src/blocs/weatherBLoC/weather_state.dart';
-import 'package:bloc_yapisi/src/models/weather.dart';
-import 'package:bloc_yapisi/src/repositories/weather_repository.dart';
+import 'package:aractakip2/src/blocs/weatherBLoC/weather_event.dart';
+import 'package:aractakip2/src/blocs/weatherBLoC/weather_state.dart';
+import 'package:aractakip2/src/models/weather.dart';
+import 'package:aractakip2/src/repositories/weather_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {

@@ -1,4 +1,4 @@
-import 'package:bloc_yapisi/src/models/weather.dart';
+import 'package:aractakip2/src/models/weather.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class WeatherState extends Equatable {

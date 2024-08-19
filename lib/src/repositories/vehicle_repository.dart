@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../models/vehicleDetail.dart';
 import '../repositories/auth_repository.dart';
 
 class VehicleRepository {
   final CollectionReference collectionVehicles =
-  FirebaseFirestore.instance.collection("vehicles");
+      FirebaseFirestore.instance.collection("vehicles");
   final AuthRepository authRepository = AuthRepository();
 
   Future<void> addVehicleToFirestore({
@@ -32,7 +31,6 @@ class VehicleRepository {
       'isActive': isActive,
       'sensors': sensors,
       'plate': plate,
-      'userId': userId,
     });
 
     if (userId != null) {
@@ -51,11 +49,7 @@ class VehicleRepository {
   }
 
   Stream<List<String>> getVehiclePlatesStream() {
-    final userId = FirebaseAuth.instance.currentUser?.uid;
-    return collectionVehicles
-        .where('userId', isEqualTo: userId)
-        .snapshots()
-        .map((snapshot) {
+    return collectionVehicles.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => doc['plate'] as String).toList();
     });
   }
@@ -71,6 +65,36 @@ class VehicleRepository {
   }
 
   Future<void> deleteVehicle(String plate) async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+
+
     await collectionVehicles.doc(plate).delete();
+
+    if (userId != null) {
+
+      final userDoc = FirebaseFirestore.instance.collection('Kisiler').doc(userId);
+      final userSnapshot = await userDoc.get();
+
+      if (userSnapshot.exists) {
+        final userData = userSnapshot.data() as Map<String, dynamic>;
+        String permissionId = userData['permissionId'].toString();
+
+
+        final permissionDoc = FirebaseFirestore.instance.collection('permissions').doc(permissionId);
+        final permissionSnapshot = await permissionDoc.get();
+
+        if (permissionSnapshot.exists) {
+          final permissionData = permissionSnapshot.data() as Map<String, dynamic>;
+          List<dynamic> vehicleIdList = List.from(permissionData['vehicleIdList'] ?? []);
+
+          if (vehicleIdList.contains(plate)) {
+            vehicleIdList.remove(plate);
+
+            await permissionDoc.update({'vehicleIdList': vehicleIdList});
+          }
+        }
+      }
+    }
   }
+
 }

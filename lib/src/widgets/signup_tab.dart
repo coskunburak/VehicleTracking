@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/loginBLoC/auth_bloc.dart';
-import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_event.dart';
-import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_state.dart';
+import 'package:aractakip2/src/blocs/loginBLoC/auth_event.dart';
+import 'package:aractakip2/src/blocs/loginBLoC/auth_state.dart';
 import '../elements/pageLoading.dart';
 
 

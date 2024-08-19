@@ -1,7 +1,8 @@
-import 'package:aractakip2/src/elements/appBar.dart';
 import 'package:aractakip2/src/pages/vehicleDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../elements/appBar.dart';
 
 class Caneditvehicle extends StatefulWidget {
   const Caneditvehicle({super.key});
@@ -12,7 +13,7 @@ class Caneditvehicle extends StatefulWidget {
 
 class _CaneditvehicleState extends State<Caneditvehicle> {
   final CollectionReference collectionVehicles =
-      FirebaseFirestore.instance.collection("vehicles");
+  FirebaseFirestore.instance.collection("vehicles");
 
   @override
   Widget build(BuildContext context) {
