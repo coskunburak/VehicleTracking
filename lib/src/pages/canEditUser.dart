@@ -1,5 +1,6 @@
-import 'package:aractakip2/src/elements/appBar.dart';
-import 'package:aractakip2/src/pages/userUpdate.dart';
+import 'package:bloc_yapisi/src/elements/appBar.dart';
+import 'package:bloc_yapisi/src/pages/canEditUserVehicles.dart';
+import 'package:bloc_yapisi/src/pages/userUpdate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class Canedituser extends StatefulWidget {
 
 class _CanedituserState extends State<Canedituser> {
   final CollectionReference collectionKisiler =
-      FirebaseFirestore.instance.collection("Kisiler");
+  FirebaseFirestore.instance.collection("Kisiler");
 
   void _deleteUser(String userId) async {
     try {
@@ -30,7 +31,7 @@ class _CanedituserState extends State<Canedituser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context: context, title: "Admin Kullanıcı Düzenleme",isBack: true),
+      appBar: appBar(context: context, title: "Admin Kullanıcı Düzenleme", isBack: true),
       body: StreamBuilder<QuerySnapshot>(
         stream: collectionKisiler.snapshots(),
         builder: (context, snapshot) {
@@ -53,7 +54,7 @@ class _CanedituserState extends State<Canedituser> {
             itemBuilder: (context, index) {
               final user = users[index];
               final data = user.data() as Map<String, dynamic>;
-              final userId = user.id; // User ID from Firestore
+              final userId = user.id;
               final name = data['name'] ?? 'No name';
               final surname = data['surname'] ?? 'No surname';
               final email = data['email'] ?? 'No email';
@@ -70,8 +71,7 @@ class _CanedituserState extends State<Canedituser> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                EditUserScreen(userId: user.id),
+                            builder: (context) => EditUserScreen(userId: user.id),
                           ),
                         );
                       },
@@ -84,7 +84,14 @@ class _CanedituserState extends State<Canedituser> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.edit_note, color: Colors.blue),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Canedituservehicles(userId: userId),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

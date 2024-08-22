@@ -1,6 +1,6 @@
-import 'package:aractakip2/src/pages/login.dart';
-import 'package:aractakip2/src/pages/splash.dart';
-import 'package:aractakip2/src/utils/notification_service.dart';
+import 'package:bloc_yapisi/src/pages/login.dart';
+import 'package:bloc_yapisi/src/pages/splash.dart';
+import 'package:bloc_yapisi/src/utils/notification_service.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

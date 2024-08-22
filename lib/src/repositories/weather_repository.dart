@@ -16,14 +16,12 @@ class WeatherRepository {
       throw Exception('Error fetching weather data');
     }
   }
-
   Future<List<String>> getCitySuggestions(String query) async {
     Dio dio = Dio();
     dio.options.headers['Content-Type'] = "application/json; charset=UTF-8";
 
     var response = await dio
         .get('http://api.weatherapi.com/v1/search.json?key=$apiKey&q=$query');
-
 
     if (response.statusCode == 200) {
       var data = response.data as List;

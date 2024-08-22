@@ -4,7 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 class UserRepository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final CollectionReference collectionKisiler = FirebaseFirestore.instance.collection("Kisiler");
+  final CollectionReference collectionKisiler =
+      FirebaseFirestore.instance.collection("Kisiler");
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   Future<DocumentSnapshot> getUserInfo(String uid) async {
@@ -25,7 +26,6 @@ class UserRepository {
 
   Future<void> deleteUser(String uid) async {
     try {
-      // Retrieve the user's document to get the permissionId
       DocumentSnapshot userDoc = await collectionKisiler.doc(uid).get();
       var userData = userDoc.data() as Map<String, dynamic>?;
 
@@ -38,7 +38,10 @@ class UserRepository {
 
         final user = FirebaseAuth.instance.currentUser;
         if (user != null && user.uid == uid) {
-          await FirebaseFirestore.instance.collection('permissions').doc(permissionIdStr).delete();
+          await FirebaseFirestore.instance
+              .collection('permissions')
+              .doc(permissionIdStr)
+              .delete();
 
           await user.delete();
         } else {
@@ -68,7 +71,6 @@ class UserRepository {
           'E-posta adresiniz güncellenmiştir. Lütfen yeni e-posta adresinize gelen doğrulama bağlantısını kontrol edin ve yeniden giriş yapın.');
     }
   }
-
   Future<void> updatePassword(String oldPassword, String newPassword) async {
     final user = _firebaseAuth.currentUser;
     final credential = EmailAuthProvider.credential(

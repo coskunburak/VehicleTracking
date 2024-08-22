@@ -1,4 +1,4 @@
-import 'package:aractakip2/src/models/vehicleDetail.dart';
+import 'package:bloc_yapisi/src/models/vehicleDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Vehicle {

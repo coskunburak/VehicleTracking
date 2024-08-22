@@ -1,8 +1,8 @@
-import 'package:aractakip2/src/blocs/loginBLoC/auth_bloc.dart';
-import 'package:aractakip2/src/blocs/loginBLoC/auth_state.dart';
-import 'package:aractakip2/src/pages/list.dart';
-import 'package:aractakip2/src/repositories/auth_repository.dart';
-import 'package:aractakip2/src/utils/global.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_bloc.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_state.dart';
+import 'package:bloc_yapisi/src/pages/list.dart';
+import 'package:bloc_yapisi/src/repositories/auth_repository.dart';
+import 'package:bloc_yapisi/src/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

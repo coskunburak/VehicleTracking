@@ -1,4 +1,4 @@
-import 'package:aractakip2/src/repositories/user_repository.dart';
+import 'package:bloc_yapisi/src/repositories/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -28,6 +28,7 @@ class AuthRepository {
         'canEditVehicle': false,
         'authorityLevel': 0,
         'permissionId': permissionId,
+        'canEditUserVehicles' : false,
       });
 
       await _addUserToFirestore(userCredential.user?.uid, email, password, name, surname, permissionId);

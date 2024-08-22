@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:aractakip2/src/blocs/firebaseBLoC/firebase_bloc.dart';
-import 'package:aractakip2/src/blocs/firebaseBLoC/firebase_event.dart';
-import 'package:aractakip2/src/blocs/firebaseBLoC/firebase_state.dart';
-import 'package:aractakip2/src/repositories/user_repository.dart';
-import 'package:aractakip2/src/elements/pageLoading.dart';
-import 'package:aractakip2/src/pages/login.dart';
-import 'package:aractakip2/src/utils/global.dart';
+import 'package:bloc_yapisi/src/blocs/firebaseBLoC/firebase_bloc.dart';
+import 'package:bloc_yapisi/src/blocs/firebaseBLoC/firebase_event.dart';
+import 'package:bloc_yapisi/src/blocs/firebaseBLoC/firebase_state.dart';
+import 'package:bloc_yapisi/src/repositories/user_repository.dart';
+import 'package:bloc_yapisi/src/elements/pageLoading.dart';
+import 'package:bloc_yapisi/src/pages/login.dart';
+import 'package:bloc_yapisi/src/utils/global.dart';
 import '../widgets/build_text.dart';
 
 class UserPage extends StatefulWidget {

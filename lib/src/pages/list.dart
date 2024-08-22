@@ -1,9 +1,10 @@
+import 'package:bloc_yapisi/src/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:aractakip2/src/elements/addButton.dart';
-import 'package:aractakip2/src/elements/appBar.dart';
+import 'package:bloc_yapisi/src/elements/addButton.dart';
+import 'package:bloc_yapisi/src/elements/appBar.dart';
 import '../blocs/listBLoC/list_bloc.dart';
 import '../blocs/listBLoC/list_event.dart';
 import '../repositories/vehicle_repository.dart';
@@ -23,7 +24,7 @@ class _ListScreenState extends State<ListScreen> {
       create: (context) => ListBloc(VehicleRepository()),
       child: Scaffold(
         appBar: appBar(context: context, title: "Liste", isBack: false),
-        backgroundColor: Colors.grey[200], // Replace with your desired color
+        backgroundColor: bodyBackground,
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('Kisiler')

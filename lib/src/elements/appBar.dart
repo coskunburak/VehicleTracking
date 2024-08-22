@@ -1,8 +1,8 @@
-import 'package:aractakip2/src/pages/adminPanel.dart';
-import 'package:aractakip2/src/pages/user.dart';
-import 'package:aractakip2/src/pages/weathersearch.dart';
-import 'package:aractakip2/src/pages/login.dart';
-import 'package:aractakip2/src/repositories/auth_repository.dart';
+import 'package:bloc_yapisi/src/pages/adminPanel.dart';
+import 'package:bloc_yapisi/src/pages/user.dart';
+import 'package:bloc_yapisi/src/pages/weathersearch.dart';
+import 'package:bloc_yapisi/src/pages/login.dart';
+import 'package:bloc_yapisi/src/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../utils/global.dart';

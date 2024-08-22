@@ -1,5 +1,5 @@
-import 'package:aractakip2/src/elements/appBar.dart';
-import 'package:aractakip2/src/pages/vehicleDetail.dart';
+import 'package:bloc_yapisi/src/elements/appBar.dart';
+import 'package:bloc_yapisi/src/pages/vehicleDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

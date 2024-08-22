@@ -1,6 +1,6 @@
-import 'package:aractakip2/src/blocs/loginBLoC/auth_event.dart';
-import 'package:aractakip2/src/blocs/loginBLoC/auth_state.dart';
-import 'package:aractakip2/src/repositories/auth_repository.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_event.dart';
+import 'package:bloc_yapisi/src/blocs/loginBLoC/auth_state.dart';
+import 'package:bloc_yapisi/src/repositories/auth_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

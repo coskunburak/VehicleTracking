@@ -1,8 +1,8 @@
-import 'package:aractakip2/src/blocs/mapBLoC/map_bloc.dart';
-import 'package:aractakip2/src/elements/appBar.dart';
-import 'package:aractakip2/src/elements/locationButton.dart';
-import 'package:aractakip2/src/pages/addVehicle.dart';
-import 'package:aractakip2/src/utils/global.dart';
+import 'package:bloc_yapisi/src/blocs/mapBLoC/map_bloc.dart';
+import 'package:bloc_yapisi/src/elements/appBar.dart';
+import 'package:bloc_yapisi/src/elements/locationButton.dart';
+import 'package:bloc_yapisi/src/pages/addVehicle.dart';
+import 'package:bloc_yapisi/src/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
