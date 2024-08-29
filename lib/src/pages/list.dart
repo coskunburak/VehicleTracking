@@ -41,7 +41,6 @@ class _ListScreenState extends State<ListScreen> {
                   if (permissionSnap.hasData && permissionSnap.data != null && permissionSnap.data!.data() != null) {
                     final vehicleIdList = permissionSnap.data!.data()!['vehicleIdList'] ?? [];
 
-                    // Check if vehicleIdList is empty
                     if (vehicleIdList.isEmpty) {
                       return Center(child: Text('No vehicles found'));
                     }
@@ -82,7 +81,7 @@ class _ListScreenState extends State<ListScreen> {
             }
           },
         ),
-        floatingActionButton: addButton(context: context), // Ensure this is placed within Scaffold
+        floatingActionButton: addButton(context: context),
       ),
     );
   }

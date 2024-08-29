@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  geolocator: ^8.0.1
   cupertino_icons: ^1.0.6
   dio:
   equatable:
@@ -19,7 +19,12 @@ dependencies:
   cloud_firestore:
   firebase_core:
   firebase_auth:
-
+  firebase_messaging:
+  permission_handler:
+  pdf:
+  printing:
+  firebase_storage:
+  geocoding:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -28,3 +33,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/seyir.png
