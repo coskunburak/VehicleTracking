@@ -8,3 +8,4 @@
 ![User Page](https://raw.githubusercontent.com/coskunburak/VehicleTracking/main/assets/images/userPage.png)
 ![Vehicle Detail](https://raw.githubusercontent.com/coskunburak/VehicleTracking/main/assets/images/vehicleDetail.png)
 ![Weather Search](https://raw.githubusercontent.com/coskunburak/VehicleTracking/main/assets/images/weatherSearch.png)
+![AdminPanelModel](https://raw.githubusercontent.com/coskunburak/VehicleTracking/main/assets/images/AdminPanelModel.svg)
