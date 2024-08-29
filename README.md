@@ -1,1 +1,12 @@
-![Alt text](addVehicle.png) ![Alt text](AdminPanel.png) ![Alt text](canEditUser.png) ![Alt text](canEditUserVehicles.png) ![Alt text](canEditVehicles.png) ![Alt text](listPage.png) ![Alt text](loginPage.png) ![Alt text](signUp.png) ![Alt text](userPage.png) ![Alt text](vehicleDetail.png) ![Alt text](weatherSearch.png)
+
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/AdminPanel.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/canEditUserVehicles.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/canEditUser.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/canEditUserVehicles.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/canEditVehicles.png) 
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/listPage.png) 
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/loginPage.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/signUp.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/userPage.png) 
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/vehicleDetail.png)
+![Alt text](https://github.com/coskunburak/VehicleTracking/tree/main/assets/images/weatherSearch.png)
